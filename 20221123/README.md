@@ -19,5 +19,9 @@ PY文件: ChangePic.py
 PY文件: CV2Study.py  
 
 
+## Dataset数据加载  
+文档：DataSet数据加载   
+PY文件：CNNTraning.py & VKModel.py & train.py
+
 
 

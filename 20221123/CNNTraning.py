@@ -12,7 +12,40 @@ from torch.utils.data import Dataset
 import os
 from PIL import Image
 from torchvision import transforms
-from torch.utils.tensorboard import SummaryWriter
+# from torch.utils.tensorboard import SummaryWriter
+from torch import zeros, argmax
+from captcha.image import ImageCaptcha
+import random
+import time
+from torch.utils.data import DataLoader
+
+captcha_array = list("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ")
+captcha_size = 4
+
+def getPic():
+    for i in range(20000):
+        image = ImageCaptcha()
+        image_text = "".join(random.sample(captcha_array,captcha_size))
+        image_path = "./datasets/train/{}_{}.png".format(image_text, int(time.time()))
+        image.write(image_text, image_path)
+
+
+def text2Vec(text):
+    vec = zeros(captcha_size,len(captcha_array))
+    # print(vec)
+    for i in range(len(text)):
+        # print(captcha_array.index(text[i]))
+        vec[i, captcha_array.index(text[i])] = 1
+    return vec
+
+
+def vec2Text(vec):
+    vec = argmax(vec, dim=1)
+    # print(vec)
+    text = ""
+    for i in vec:
+        text += captcha_array[i]
+    return text
 
 
 class my_dataset(Dataset):
@@ -23,7 +56,7 @@ class my_dataset(Dataset):
         self.transfroms = transforms.Compose(
             [
                 transforms.ToTensor(),
-                transforms.Resize((80, 170)),
+                transforms.Resize((60, 160)),
                 transforms.Grayscale()
             ]
         )
@@ -34,21 +67,34 @@ class my_dataset(Dataset):
 
     def __getitem__(self, index):
         image_path = self.image_path[index]
+        # 将图片灰度化
         image = self.transfroms(Image.open(image_path))
         # image = Image.open(image_path)
         # image.show()
         label = image_path.split("/")[-1]
+        # 取出验证码的字符
         label = label.split("_")[0]
-        return image,label
+        label_tensor = text2Vec(label)
+        label_tensor = label_tensor.view(1,-1)[0]
+        return image,label_tensor
 
 
 def main():
-    writer = SummaryWriter("logs")
-    train_data = my_dataset("./pic/")
-    img,label = train_data[0]
-    print(img.shape,label)
-    writer.add_image("img", img, 1)
-    writer.close()
+    # getPic()
+    # writer = SummaryWriter("logs")
+    # train_data = my_dataset("./datasets/train/")
+    # img,label = train_data[0]
+    # print(img.shape,label)
+    # writer.add_image("img", img, 1)
+    # writer.close()
+    # vec = text2Vec("aaab")
+    # # print(vec, vec.shape)
+    # text = vec2Text(vec)
+    # print(text)
+    test_dataset = my_dataset("./datasets/test/")
+    test_dataloader = DataLoader(test_dataset, batch_size=40,shuffle=True)
+    for i,(images,labels) in enumerate(test_dataloader):
+        print(images.shape)
 
 
 if __name__ == '__main__':
