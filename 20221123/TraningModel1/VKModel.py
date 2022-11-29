@@ -12,6 +12,7 @@ from torch import nn
 
 
 captcha_array = list("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ")
+# captcha_array = list("0123456789abcdefghijklmnopqrstuvwxyz")
 captcha_size = 4
 
 

@@ -19,9 +19,84 @@ PY文件: ChangePic.py
 PY文件: CV2Study.py  
 
 
-## Dataset数据加载  
-文档：DataSet数据加载   
-PY文件：CNNTraning.py & VKModel.py & train.py
+## TraningModel  
+验证码训练：此验证码是4位数字+小写字母的组合  
+样式如下：  
+![](./res/7.png)  
+1. 先用CommonGetPic.py生成20000张训练集放在Train文件夹和100张测试集放在test文件夹。  
+2. 再用train.py对训练集进行训练，得到model.pth模型。  
+3. 最后用predict.py对测试集进行预测，查看识别正确率有多少。  
+
+<details>
+    <summary>输出结果</summary>
+
+~~~python
+['./datasets/test/0fbz_1669613120.png', './datasets/test/0z4q_1669613120.png',datasets/test/1ajt_1669613120.png', './datasets/test/1mwr_1669613120.png',
+...
+datasets/test/5vpy_1669613120.png', './datasets/test/5yxi_1669613120.png',datasets/test/6qth_1669613120.png', './datasets/test/6wy3_1669613120.png']
+100
+正确值: 34ub, 预测值: 34ub
+正确值: fbqz, 预测值: fbqz
+正确值: 9kao, 预测值: 9kao
+...
+正确值: 6z9x, 预测值: 6z9x
+正确值: or0c, 预测值: or0c
+正确率: 79.0
+~~~
+
+</details> 
+
+
+## TraningModel1  
+验证码训练：此验证码是4位数字+大小写字母的组合  
+样式如下：  
+![](./res/8.png)  
+1. 先用CommonGetPic.py生成20000张训练集放在Train文件夹和100张测试集放在test文件夹。  
+2. 再用train.py对训练集进行训练，得到model.pth模型。  
+3. 最后用predict.py对测试集进行预测，查看识别正确率有多少。 
+发现正确率只有30%，因此将traning数增加到了40000张，正确率达到了56%。  
+
+<details>
+    <summary>输出结果</summary>
+
+~~~python
+['./datasets/test/0cGl_1669616537.png', './datasets/test/0ihl_1669616537.png','datasets/test/0J1w_1669616537.png', './datasets/test/0ncw_1669616537.png', 
+...
+'datasets/test/i4bw_1669616537.png', './datasets/test/IeyC_1669616537.png', 'datasets/test/Zbh1_1669616537.png', './datasets/test/zFAy_1669616537.png']
+100
+正确值: 8PRm, 预测值: 8PRm
+正确值: LXq2, 预测值: LXq2
+正确值: ElQJ, 预测值: ElQJ
+...
+正确值: Ss86, 预测值: Ss86
+正确值: JWEf, 预测值: JWEf
+正确率: 56.00000000000001
+~~~
+
+</details> 
+  
+   
+## 训练图片环境搭建   
+
+- 安装库  
+pip install torch  
+pip install torchvision  
+pip install tensorboard  
+
+- 参考链接  
+1. https://www.bilibili.com/video/BV1BP4y1b7Er/?p=3&spm_id_from=pageDriver&vd_source=92d090d4c3dbc39b2a328af71c01284b  
+
+
+
+- 问题  
+1. 执行tensorboard --logdir==logs报错Fatal error in launcher: Unable to create process using  
+解决方法：https://blog.csdn.net/sinat_38316070/article/details/105418480  
+python -m tensorboard.main --logdir=logs  
+2. 执行GPU运行train.py时报错Torch not compiled with CUDA enabled  
+解决办法：https://blog.csdn.net/moyong1572/article/details/119438286  
+pip install torch==1.12.0+cu113 torchvision==0.13.0+cu113 torchaudio==0.12.0 --extra-index-url https://download.pytorch.org/whl/cu113  
+
+
 
 
 

@@ -4,11 +4,11 @@
 @Project -> File    : 20221123 -> train.py
 @IDE     : PyCharm
 @Author  : Aimee
-@Date    : 2022/11/25 15:18
+@Date    : 2022/11/28 13:30
 @Desc    :
 ================================================="""
 from torch.utils.data import DataLoader
-from CNNTraning import my_dataset
+from datasets_my import my_dataset
 from torch import nn
 from torch.optim import Adam
 from VKModel import vkmodel
@@ -26,25 +26,25 @@ def main():
     vk_model = vkmodel().cuda()  # GPU
     # loss_fn = nn.MultiLabelSoftMarginLoss()  # CPU
     loss_fn = nn.MultiLabelSoftMarginLoss().cuda()  # GPU
-    optim = Adam(vk_model.parameters(),lr=0.001)
-    w = SummaryWriter("logs")
+    optim = Adam(vk_model.parameters(), lr=0.001)
+    # w = SummaryWriter("logs")
     total_step = 0
     for epoch in range(10):
         print("外层训练次数{}".format(epoch))
-        for i, (images,labels) in enumerate(train_dataloader):
+        for i, (images, labels) in enumerate(train_dataloader):
             images = images.cuda()  # GPU
             labels = labels.cuda()  # GPU
             vk_model.train()
             outputs = vk_model(images)
-            loss = loss_fn(outputs,labels)
+            loss = loss_fn(outputs, labels)
             optim.zero_grad()
             loss.backward()
             optim.step()
             total_step += 1
-            if i%100 == 0:
-                print("训练次数{},损失率{}".format(i,loss.item()))
-                w.add_scalar("loss",loss,total_step)
-    torch.save(vk_model, "model.pth")
+            if i % 100 == 0:
+                print("训练次数{},损失率{}".format(i, loss.item()))
+                # w.add_scalar("loss",loss,total_step)
+    torch.save(vk_model, "model.pth")  # model：英文小写+数字(20000)，model1：英文+数字(60000)
 
 
 if __name__ == '__main__':

@@ -1,33 +1,19 @@
 #!/usr/bin/env python
 # _*_ coding: UTF-8 _*_
 """=================================================
-@Project -> File    : 20221123 -> CNNTraning.py
+@Project -> File    : 20221123 -> datasets.py
 @IDE     : PyCharm
 @Author  : Aimee
-@Date    : 2022/11/25 9:32
+@Date    : 2022/11/28 13:27
 @Desc    :
-pip install torch: torch-1.13.0-cp39-cp39-win_amd64.whl
 ================================================="""
 from torch.utils.data import Dataset
 import os
-from PIL import Image
 from torchvision import transforms
-# from torch.utils.tensorboard import SummaryWriter
+from PIL import Image
 from torch import zeros, argmax
-from captcha.image import ImageCaptcha
-import random
-import time
+from CommonGetPic import captcha_array,captcha_size
 from torch.utils.data import DataLoader
-
-captcha_array = list("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ")
-captcha_size = 4
-
-def getPic():
-    for i in range(20000):
-        image = ImageCaptcha()
-        image_text = "".join(random.sample(captcha_array,captcha_size))
-        image_path = "./datasets/train/{}_{}.png".format(image_text, int(time.time()))
-        image.write(image_text, image_path)
 
 
 def text2Vec(text):
@@ -80,7 +66,6 @@ class my_dataset(Dataset):
 
 
 def main():
-    # getPic()
     # writer = SummaryWriter("logs")
     # train_data = my_dataset("./datasets/train/")
     # img,label = train_data[0]
