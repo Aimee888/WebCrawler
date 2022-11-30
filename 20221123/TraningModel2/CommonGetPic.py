@@ -30,7 +30,7 @@ def save_data(img, title):
 
 def main():
     for i in range(20000):
-        img_url = "https://spas.efoxconn.com/user-server/api/user/getKaptchaImg?v=0.5326817783494668"
+        img_url = ""
         save_data(img_url, str(i))
 
 
