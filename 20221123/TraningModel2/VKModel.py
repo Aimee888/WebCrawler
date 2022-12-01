@@ -11,8 +11,8 @@ import torch
 from torch import nn
 
 
-captcha_array = list("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ")
-# captcha_array = list("0123456789abcdefghijklmnopqrstuvwxyz")
+# captcha_array = list("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ")
+captcha_array = list("0123456789abcdefghijklmnopqrstuvwxyz")
 captcha_size = 4
 
 
@@ -39,9 +39,10 @@ class vkmodel(nn.Module):
             nn.ReLU(),
             nn.MaxPool2d(kernel_size=2)
         )
+        # in_features为x.shape，后面3个值得乘积
         self.layer5 = nn.Sequential(
             nn.Flatten(),
-            nn.Linear(in_features=15360,out_features=4096),
+            nn.Linear(in_features=27648,out_features=4096),
             nn.Dropout(0.2),
             nn.ReLU(),
             nn.Linear(in_features=4096, out_features=captcha_size*captcha_array.__len__())
@@ -52,12 +53,14 @@ class vkmodel(nn.Module):
         x = self.layer2(x)
         x = self.layer3(x)
         x = self.layer4(x)
+        # print(x.shape)
         x = self.layer5(x)
         return x
 
 
 def main():
     data = torch.ones(1,1,50,300)
+    # print(data.shape)
     m = vkmodel()
     x = m(data)
     print(x.shape)

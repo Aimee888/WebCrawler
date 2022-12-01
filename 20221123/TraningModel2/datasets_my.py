@@ -12,7 +12,7 @@ import os
 from torchvision import transforms
 from PIL import Image
 from torch import zeros, argmax
-from CommonGetPic import captcha_array,captcha_size
+from _CommonGetPic import captcha_array,captcha_size
 from torch.utils.data import DataLoader
 
 
@@ -43,7 +43,7 @@ class my_dataset(Dataset):
             [
                 transforms.ToTensor(),
                 transforms.Resize((50, 300)),
-                transforms.Grayscale()
+                transforms.Grayscale(),
             ]
         )
         print(self.image_path)
@@ -60,6 +60,7 @@ class my_dataset(Dataset):
         label = image_path.split("/")[-1]
         # 取出验证码的字符
         label = label.split("_")[0]
+        # print(label)
         label_tensor = text2Vec(label)
         label_tensor = label_tensor.view(1,-1)[0]
         return image,label_tensor
@@ -67,8 +68,10 @@ class my_dataset(Dataset):
 
 def main():
     test_dataset = my_dataset("./datasets/test/")
-    test_dataloader = DataLoader(test_dataset, batch_size=40,shuffle=True)
+    test_dataloader = DataLoader(test_dataset, batch_size=4,shuffle=True)
     for i,(images,labels) in enumerate(test_dataloader):
+        print(labels)
+        # print(i)
         print(images.shape)
         print(labels.shape)
 

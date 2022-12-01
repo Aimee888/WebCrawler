@@ -27,7 +27,7 @@ def main():
     optim = Adam(vk_model.parameters(), lr=0.001)
     # w = SummaryWriter("logs")
     total_step = 0
-    for epoch in range(10):
+    for epoch in range(40):
         print("外层训练次数{}".format(epoch))
         for i, (images, labels) in enumerate(train_dataloader):
             images = images.cuda()  # GPU
