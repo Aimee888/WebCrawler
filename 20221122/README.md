@@ -14,18 +14,39 @@
  ![](./res/1.png)  
  可以看到验证码已经成功下载下来，并且命名方式就是验证码字符加上随机数  
 
- ## 识别验证码  
+ ## ddddocr识别验证码  
  参考链接：https://www.cnblogs.com/hahaa/p/16411939.html  
+ ddddocr开源库：https://github.com/sml2h3/ddddocr  
+
  - 安装ddddocr  
  ~~~
  pip install ddddocr
  ~~~  
- - 写识别验证码的程序recognition_veryfycode.py  
+ - 写识别验证码的程序ddddocr_recognition.py  
  可以看到用GetImgSample获取到的样本图片./pic/*.jpg识别率只有2/10 = 20%，识别率非常低。  
  但是用这个程序识别从另一个网页中得到的样本./pic1/*.jpg的识别率是10/10 = 100%，识别率非常高。  
  ./pic1/*jpg样式如下：  
  ![](./res/2.png)  
  所以说ddddocr这个开源库适合的是./pic1文件夹中的验证码样式。  
+
+ ## 百度API识别验证码  
+ 参考链接：https://www.jianshu.com/p/4cb270ecae21  
+
+ - 安装AipOcr  
+ ~~~
+ pip install baidu_aip
+ ~~~  
+ - 写识别验证码的程序baidu_API_recognition.py
+ 获取自己的app_id, app_key, secret_key, 这部分自己没有申请，在网上找的别人现成的key来试的。  
+ 可以看到./pic/*.jpg的识别率是0/10 = 0%
+ 可以看到./pic1/*.jpg的识别率是5/10 = 50%
+
+
+ ## tesseract_ocr  
+ 参考链接：https://blog.csdn.net/weixin_43656359/article/details/103401848  
+ Github地址：https://github.com/tesseract-ocr/tesseract  
+ 这种识别方式适合标准字体的识别，比如你可以截图文章然后识别里面的文字。  
+
 
  ## 问题清单  
  1. 验证码链接是同一个URL，但是验证码在变，requests如何通过验证码验证？  

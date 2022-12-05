@@ -16,7 +16,7 @@ def main():
     with open('./pic1/ynna_5.jpg', 'rb') as f:
         img_bytes = f.read()
         result = ocr.classification(img_bytes)
-        print(result)
+        # print(result)
         result1 = ''.join(re.findall(r'[A-Za-z0-9]', result))
         print(result1)
 
