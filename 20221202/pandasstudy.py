@@ -43,6 +43,9 @@ def test3():
     print(df2.dtypes)
 
 
+"""
+Pandas删选出某一列数值大于0的行
+"""
 def test4():
     x1 = pd.ExcelFile(r"E:\gitplay\python\VerifyCodeTraning\tmp.xls")
     dfs = x1.parse(x1.sheet_names[0])
@@ -51,11 +54,31 @@ def test4():
     dfs.to_excel("1.xlsx", sheet_name='sheet1', index=False)
 
 
+def test5():
+    df = pd.read_excel(open('1.xlsx', 'rb'), sheet_name='sheet1')
+    # print(df.index)
+    print(type(df.columns))
+    # 遍历列标题：
+    for one_col in df.columns:
+        print(one_col)
+
+    # 读取第一行第0列的数据
+    # print(df.iat[1,0])
+    # 读取excel中除标题行的所有数据，返回的是一个数组
+    data = df.values
+    # print(data)
+    for tr_list in data:
+        for td_list in tr_list:
+            print(td_list, end="\t")
+        print("")
+
+
 def main():
     # test1()
     # test2()
     # test3()
-    test4()
+    # test4()
+    test5()
 
 
 if __name__ == '__main__':

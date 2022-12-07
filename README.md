@@ -12,6 +12,11 @@
 
 
 ## 20221202  
-excel的处理  
-所用库: pandas  
+excel的处理及用outlook发送邮件  
+所用库: pandas & win32com  
+
+## 20221206  
+JS逆向第2节 - 混淆与无混淆数据加密方案解析  
+参考链接：https://www.bilibili.com/video/BV14g411B7Gq?p=2&vd_source=92d090d4c3dbc39b2a328af71c01284b  
+
 
