@@ -48,8 +48,18 @@ def main():
         outlook = win32.Dispatch('Outlook.Application')
     except:
         outlook.Quit
+    # 查看当前outlook有多少个账户
+    send_person = None
+    for accout in outlook.Session.Accounts:
+        if accout.DisplayName == "XXXX":
+            send_person = accout
+        print(accout.DisplayName)
     mail = outlook.CreateItem(0)
-    mail.To = 'XXXX'  # 收件人
+    # 不生效
+    # mail.SendUsingAccount = send_person
+    print(send_person)
+    mail._oleobj_.Invoke(*(64209, 0, 8, 0, send_person))
+    mail.To = 'xxxx'  # 收件人
     # mail.CC = '12345678@qq.com'  # 抄送人
     # mail.Bcc='12345678@qq.com' #密抄收件人
     mail.Subject = 'test1'  # 邮件主题
@@ -61,7 +71,7 @@ def main():
     body_html = body_html + '<table width="1" border="1" cellspacing="1" cellpadding="1" height="100">'
     # rng_list = get_excel_date('1.xlsx')
     # print(rng_list)
-    title, data = get_excel_date2('1.xlsx')
+    title, data = get_excel_date2(r'1.xlsx')
 
     # # 表头
     # for tr_list in rng_list[:1]:
